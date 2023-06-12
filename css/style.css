@@ -1,0 +1,345 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Bangers";
+    src: url("../asset/fonts/Bangers-Regular.ttf");
+}
+@font-face {
+    font-family: "Edu";
+    src: url("../asset/fonts/EduNSWACTFoundation-VariableFont_wght.ttf");
+}
+
+:root {
+    --blanco: #ffffff;
+    --negro: #011F26;
+    --grisOscuro: #343a40;
+    --gris: #7C7C7C;
+    --grisClaro: #ccc;
+    --celeste: #7E8ECB;
+    --azul: #031059;
+    --azulClaro: #044D8C;
+}
+
+/* Estilos generales */
+body {
+    font-family: "Edu";
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    border: 10px solid var(--grisOscuro);
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-family: "Bangers";
+    font-size: 70px;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-align: center;
+    padding-top: 60px;
+}
+
+h2 {
+    font-family: "Bangers";
+    font-size: 35px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+h3 {
+    font-family: "Bangers";
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-family: "Edu";
+    font-size: 20px;
+    text-align: center;
+}
+
+p {
+    font-family: "Edu";
+    font-size: 18px;
+    text-align: center;
+}
+
+img {
+    align-self: center;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--blanco);
+}
+
+button {
+    font-family: "Edu";
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color: var(--negro);
+    color: var(--blanco);
+    padding: 0 25px;
+    margin: 5px;
+}
+
+button:hover {
+    transform: scale(1.05);
+    transition: all 0.9s;
+    background-color: var(--gris);
+}
+
+a {
+    text-decoration: none;
+}
+
+a .btn {
+    display: flex;
+    justify-content: center;
+}
+
+nav a {
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    transform: scale(1.02);
+    transition: all 0.5s;
+}
+
+nav a img:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.navbar-brand:hover {
+    color: var(--blanco);
+    transform: scale(1.05);
+    transition: all 0.5s;
+}
+
+footer {
+    color: var(--negro);
+    text-align: center;
+    font-size: 20px;
+    height: 150px;
+    padding-top: 20px;
+}
+
+footer i {
+    font-size: 30px;
+    color: var(--gris);
+    letter-spacing: 30px;
+}
+
+footer i:hover {
+    color: var(--blanco);
+    transform: scale(1.05);
+    transition: all 0.9s;
+}
+
+i {
+    font-size: 30px;
+    color: var(--gris);
+    letter-spacing: 30px;
+}
+
+i:hover {
+    color: var(--negro);
+    transform: scale(1.05);
+    transition: all 0.9s;
+}
+
+.imgGoTop {
+    font-size: 40px;
+    color: var(--negro);
+    position: fixed;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+}
+label {
+    color: var(--blanco);
+    text-transform: uppercase;
+}
+
+.disableElement {
+    display: none !important;
+}
+
+#errorDiv p{
+    text-align: center;
+    color: red;
+}
+
+#faUsr {
+    color: var(--grisClaro);
+}
+
+.d-flex {
+    padding: 5px 0 10px 5px;
+}
+.portada {
+    background-color: var(--gris);
+    background-image: url("../asset/img/banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 250px;
+    padding: 10px 0 5px 10px;
+    color: var(--blanco);
+    text-shadow: 0 0 10px --negro;
+}
+
+.sinopsis {
+    background-color: var(--gris);
+    background-image: url("../asset/img/banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 250px;
+    padding: 10px 0 5px 10px;
+    color: var(--blanco);
+    text-shadow: 0 0 10px --negro;
+    margin-top: 10px;
+}
+
+iframe {
+    align-self: center;
+    width: 100%;
+    height: 550px;
+    margin: 10px;
+}
+
+.container-fluid .row .col-12 {
+    padding: 0px;
+}
+
+.card {
+    margin: 10px 0;
+}
+.card img {
+    width: 240px;
+    height: 320px;
+}
+.card p {
+    align-self: center;
+}
+.card i {
+    align-self: center;
+}
+.card-header {
+    background-color: var(--celeste);
+}
+.card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: var(--grisClaro);
+}
+.card-footer a {
+    margin: 5px;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-body a {
+    margin: 5px;
+}
+.card-body ul li {
+    text-decoration: none;
+    text-align: center;
+}
+
+.media img {
+    width: 90px;
+    height: 150px;
+}
+
+.media .media-body h4 {
+    text-align: left;
+}
+
+.media .media-body h2 {
+    text-align: left;
+}
+
+.media .media-body h3 {
+    text-align: left;
+}
+
+.ticket {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .ticket img {
+        width: 300px;
+        height: 110px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    h1 {
+        font-size: 55px;
+    }
+}
+
+/* Estilos para acordeón */
+.acordeon {
+    /* background-color: #8B96D9; */
+    background-color: var(--celeste);
+    color: var(--negro);
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.4s;
+}
+
+.active,
+.acordeon:hover {
+    background-color: var(--grisClaro);
+}
+
+.acordeon i {
+    font-size: 15px;
+    color: var(--negro);
+}
+.acordeon i:hover {
+    color: var(--gris);
+    transform: scale(1.05);
+    transition: all 0.9s;
+}
+
+.panel {
+    padding: 0 15px;
+    background-color: var(--blanco);
+    display: none;
+    overflow: hidden;
+}
