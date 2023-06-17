@@ -37,6 +37,18 @@ let validarAsiento = false
 let validarTarjeta = false
 let validarResumen = false
 
+function mostrarPelicula () {
+    Swal.fire({
+        title: localStorage.getItem("pelicula"),
+        text: 'Película seleccionada para comprar entradas',
+        imageUrl: '../asset/img/' + localStorage.getItem("imagePelicula"),
+        imageWidth: 200,
+        imageHeight: 350,
+        imageAlt: localStorage.getItem("pelicula")
+    })
+}
+mostrarPelicula();
+
 formEntradas.addEventListener('submit', function (event) {
     event.preventDefault()
     if (validar) {
@@ -66,7 +78,7 @@ function validarUsr() {
 function validarMovie() {
     if (localStorage.getItem('pelicula') != null) {
         //Muestra el nombre de la película
-        sectionMovie.innerHTML = `<h3>Película seleccionada: ${localStorage.getItem('pelicula')}</h3><br> 
+        sectionMovie.innerHTML = `<h3>Película seleccionada: ${localStorage.getItem('pelicula')}</h3><br>
         <a class="btn btn-dark" id="otraPelicula">SELECCIONAR OTRA PELÍCULA</a> 
         <a class="btn btn-dark" href="../index.html">IR A CARTELERA</a>`;
         //Btn que permite cambiar la selección de película
