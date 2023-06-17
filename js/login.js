@@ -7,6 +7,31 @@ const nombreLogin = document.getElementById("nombreLogin");
 const contraseñaLogin = document.getElementById("contraseñaLogin");
 
 let vLogin = false;
+limpiarLogin();
+
+const urlUsuarios = "https://648d08998620b8bae7ed860a.mockapi.io/Usuarios";
+const arrUsuarios=[];
+
+//Trae los usuarios de la BD de MockAPI
+function traerUsuarios() {
+  fetch(urlUsuarios)
+    .then((jsonUsuarios) => jsonUsuarios.json())
+    .then((data) => {
+      data.forEach((usuario) => {
+        arrUsuarios.push(usuario);
+      });
+    });
+}
+traerUsuarios();
+
+function validaUsuarioExistente () {
+  if (localStorage.getItem("email") && localStorage.getItem("contraseña")) 
+    {
+      usuarioLogin.value=localStorage.getItem("email");
+      contraseñaLogin.value=localStorage.getItem("contraseña");
+    }
+}
+validaUsuarioExistente ();
 
 formLogin.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -20,51 +45,40 @@ function validarLogin() {
     vLogin = false;
     return false;
   } else {
-    if (
-      usuarioLogin.value != localStorage.getItem("email") ||
-      contraseñaLogin.value != localStorage.getItem("contraseña")
-    ) {
-      errorLabel.innerText =
-        "El usuario y/o la contraseña no coinciden!, ingreselos nuevamente";
-      errorDiv.classList.remove("disableElement");
-      usuarioLogin.focus();
-      vLogin = false;
-      return false;
-    } else {
-      vLogin = true;
-      return true;
-    }
+    //Busca el usuario en el arreglo de obj usuario
+    let usrEncontrado = arrUsuarios.filter((e)=>{
+      return  e.email===usuarioLogin.value; //&& e.contrasena===contraseñaLogin.value;
+    })
+    usrEncontrado.forEach(e => {
+      if (usuarioLogin.value != e.email || contraseñaLogin.value != e.contrasena) {
+          errorLabel.innerText = "El usuario y/o la contraseña no coinciden!, ingreselos nuevamente";
+          errorDiv.classList.remove("disableElement");
+          usuarioLogin.focus();
+          vLogin = false;
+          return false;
+      } else {
+        vLogin = true;
+        //Guardar los datos en el localStorage
+        localStorage.setItem("nombre", e.nombre);
+        localStorage.setItem("apellido", e.apellido);
+        localStorage.setItem("email", e.email);
+        localStorage.setItem("contraseña", e.contrasena);
+        return true;
+      }
+    });
   }
 }
 
 function enviarLogin() {
-  //Guardar los datos del usuario en un JSON para la BD
-  // let usuario = {
-  //     nombre: nombre.value,
-  //     apellido: apellido.value,
-  //     dni: dni.value,
-  //     email: email.value,
-  //     contraseña1: contraseña1.value
-  // };
-
-  //Json
-  // let json = JSON.stringify(usuario);
-  //Guardar en BD
-
-  //Guardar los datos en el localStorage para simular el funcionamiento de la app
-  // localStorage.setItem("nombre", nombre.value);
-  // localStorage.setItem("apellido", apellido.value);
-  // localStorage.setItem("email", email);
-  // localStorage.setItem("contraseña", contraseña);
-
-  // formUsuarios.reset();
   errorLabel.innerText = "paso";
   window.location.href = "../pages/entradas.html";
 }
 
 btnLogin.addEventListener("click", () => {
-  // if (validarLogin()) {
-  //     enviarLogin();
-  // }
-  validarLogin() === true && enviarLogin();
+  validarLogin();
+  enviarLogin();
 });
+
+function limpiarLogin () {
+  vLogin=false;
+}

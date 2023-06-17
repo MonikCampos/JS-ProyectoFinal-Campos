@@ -316,13 +316,20 @@ const movies = [
 ];
 const foundMovies = [];
 
+//Se podría tener las películas en MockAPI y traer aquellas que esten en cartelera, por ej, 
+//filtrando con un get y un campo booleano enCartelera=true
+//Dejo el manejo de ojetos y arreglos, para lo solicitado en el proyecto final.
+
+//Crea un json de películas y las almacena en localstorage.
+const jsonPeliculas = JSON.stringify(movies);
+localStorage.getItem("jsonPeliculas")!=true && localStorage.setItem("jsonPeliculas", jsonPeliculas)  
+
 function validarUsr() {
   if (
     (localStorage.getItem("nombre") != null &&
       localStorage.getItem("apellido") != null &&
       localStorage.getItem("contraseña") != null) ||
-    localStorage.getItem("email") != null
-  ) {
+    localStorage.getItem("email") != null) {
     //Asigna el nombre del usuario logueado a la página
     faUsr.innerHTML = localStorage.getItem("nombre");
   }

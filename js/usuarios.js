@@ -13,6 +13,8 @@ const contraseña2 = document.getElementById("contraseña2");
 
 let validarUsr = false;
 
+const urlUsuarios = "https://648d08998620b8bae7ed860a.mockapi.io/Usuarios";
+
 formUsuarios.addEventListener("submit", function (event) {
     event.preventDefault();
 });
@@ -40,28 +42,54 @@ function validarUsrFormulario() {
     }
 }
 
+async function crearUsuarioAsync(usr) {
+    //Tranforma en Json y guarda los datos del usuario en MockAPI
+    const resp = await fetch(urlUsuarios, {
+    method: "POST",
+    body: JSON.stringify(usr),
+    headers: {
+        "Content-Type": "application/json",
+    },
+    });
+    const data = await resp.json();
+    
+    //Guardar los datos en el localStorage
+    localStorage.setItem("nombre", usr.nombre);
+    localStorage.setItem("apellido", usr.apellido);
+    localStorage.setItem("email", usr.email);
+    localStorage.setItem("contraseña", usr.contrasena);
+
+    //Librería: Confirmación de creación de usuario con éxito!
+    Swal.fire({
+        title: '<strong>Bienvenido, ' + localStorage.getItem("nombre") + '</strong>',
+        html:
+        '<b>El usuario fue creado con éxito!</b>' +
+        '<br><a href="../pages/login.html">LOGIN</a> ',
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: true,
+        confirmButtonColor: '#044D8C',
+        confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i> Genial!',
+    }) .then((result) => {
+        if (result.isConfirmed) {
+            formUsuarios.reset();
+            errorLabel.innerText="";
+            window.location.href = "../pages/login.html";
+        } 
+    })
+}
+
 function enviarUsrFormulario() {
-    //Guardar los datos del usuario en un JSON para la BD
     let usuario = {
         nombre: nombre.value,
         apellido: apellido.value,
         dni: dni.value,
         email: email.value,
-        contraseña1: contraseña1.value
+        contrasena: contraseña1.value
     };
-    
-    //Json
-    let json = JSON.stringify(usuario);
-    //Guardar en BD
-    
-    //Guardar los datos en el localStorage para simular el funcionamiento de la app
-    localStorage.setItem("nombre", nombre.value);
-    localStorage.setItem("apellido", apellido.value);
-    localStorage.setItem("email", email.value);
-    localStorage.setItem("contraseña", contraseña1.value);
-
-    formUsuarios.reset();
-    errorLabel.innerText="";
+    //Guarda los datos del usuario en MockAPI
+    crearUsuarioAsync(usuario);
 }
 
 btnReset.addEventListener("click", () => {
@@ -70,9 +98,5 @@ btnReset.addEventListener("click", () => {
 });
 
 btnSubmit.addEventListener("click", () => {
-    if (validarUsrFormulario()) {
-        enviarUsrFormulario();
-        window.location.href = "../pages/login.html";
-    }
-    
+    validarUsrFormulario() === true ? enviarUsrFormulario() : Swal.fire('Error al agregar nuevo usuario, intente nuevamente');
 });

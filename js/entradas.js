@@ -37,17 +37,23 @@ let validarAsiento = false
 let validarTarjeta = false
 let validarResumen = false
 
+const jsonPeliculas = localStorage.getItem("jsonPeliculas");
+const arrPelicula = JSON.parse(jsonPeliculas);
+
+
 function mostrarPelicula () {
     Swal.fire({
         title: localStorage.getItem("pelicula"),
         text: 'Película seleccionada para comprar entradas',
         imageUrl: '../asset/img/' + localStorage.getItem("imagePelicula"),
-        imageWidth: 200,
-        imageHeight: 350,
+        imageWidth: 180,
+        imageHeight: 250,
         imageAlt: localStorage.getItem("pelicula")
     })
 }
 mostrarPelicula();
+validarUsr()
+validarMovie()
 
 formEntradas.addEventListener('submit', function (event) {
     event.preventDefault()
@@ -73,6 +79,16 @@ function validarUsr() {
         formEntradas.classList.add("disableElement");
     }
 }
+function cargaPeliculasSelect() {
+    //Trae las películas del arreglo de peliculas (del json del localstorage) y arma el html del select
+    let htmlSelect='<h3>Selección de película</h3><select name="selectPelicula" id="selectPelicula"><option selected value="0">Seleccione Película...</option>';
+    let htmlOption="";
+    arrPelicula.forEach(e => {
+        htmlOption = `${htmlOption}<option value="${e.title}">${e.title}</option>`;
+    });
+    htmlSelect += htmlOption+"</select><p></p>";
+    return htmlSelect
+}
 
 //Función que busca si hay una película seleccionada en el localstorage para empezar la compra de entrada asociada
 function validarMovie() {
@@ -87,29 +103,7 @@ function validarMovie() {
             //Limpia la selección de la película
             selectCine.classList.add("disableElement");
             localStorage.setItem('pelicula', null);
-            //voy a hacer una función que cargue los nombres de las peliculas en el local y los traiga acá
-            sectionMovie.innerHTML = `<h3>Selección de película</h3>
-            <select name="selectPelicula" id="selectPelicula">
-                <option selected value="0">Seleccione Película...</option>
-                <option value="La Sirenita">La Sirenita</option>
-                <option value="Cuando ellas quieren más">Cuando ellas quieren más</option>
-                <option value="Amor a primer mensaje">Amor a primer mensaje</option>
-                <option value="Cría Siniestra">Cría Siniestra</option>
-                <option value="Último recurso">Último recurso</option>
-                <option value="La Barbarie">La Barbarie</option>
-                <option value="El triunfo">El triunfo</option>
-                <option value="La sudestada">La sudestada</option>
-                <option value="Guardianes de la Galaxia">Guardianes de la Galaxia</option>
-                <option value="Misántropo">Misántropo</option>
-                <option value="Vera">Vera</option>
-                <option value="Rápidos y Furiosos X">Rápidos y Furiosos X</option>
-                <option value="Sombras de un crimen">Sombras de un crimen</option>
-                <option value="La extorsión">La extorsión</option>
-                <option value="John Wick 4">John Wick 4</option>
-                <option value="Super Mario Bros">Super Mario Bros</option>
-            </select>
-            <p></p>
-            `;
+            sectionMovie.innerHTML = cargaPeliculasSelect();
             selectPelicula = document.getElementById('selectPelicula')
             selectPelicula.addEventListener("change", onChangePelicula)
         });
@@ -118,29 +112,8 @@ function validarMovie() {
         validarPelicula=true;
         return true;
     } else {
-        //No hay pelicual seleccionada, select que permite cambiar la elegir de película
-        sectionMovie.innerHTML = `<h3>Selección de película</h3>
-        <select name="selectPelicula" id="selectPelicula">
-            <option selected value="0">Seleccione Película...</option>
-            <option value="La Sirenita">La Sirenita</option>
-            <option value="Cuando ellas quieren más">Cuando ellas quieren más</option>
-            <option value="Amor a primer mensaje">Amor a primer mensaje</option>
-            <option value="Cría Siniestra">Cría Siniestra</option>
-            <option value="Último recurso">Último recurso</option>
-            <option value="La Barbarie">La Barbarie</option>
-            <option value="El triunfo">El triunfo</option>
-            <option value="La sudestada">La sudestada</option>
-            <option value="Guardianes de la Galaxia">Guardianes de la Galaxia</option>
-            <option value="Misántropo">Misántropo</option>
-            <option value="Vera">Vera</option>
-            <option value="Rápidos y Furiosos X">Rápidos y Furiosos X</option>
-            <option value="Sombras de un crimen">Sombras de un crimen</option>
-            <option value="La extorsión">La extorsión</option>
-            <option value="John Wick 4">John Wick 4</option>
-            <option value="Super Mario Bros">Super Mario Bros</option>
-        </select>
-    <p></p>
-    `;
+    //No hay pelicual seleccionada, select que permite cambiar la elegir de película
+    sectionMovie.innerHTML = cargaPeliculasSelect();
     selectPelicula = document.getElementById('selectPelicula')
     selectPelicula.addEventListener("change", onChangePelicula)
     validarPelicula=false
@@ -148,17 +121,23 @@ function validarMovie() {
     }
 }
 
-// limpiarEntrada()
-validarUsr()
-validarMovie()
-
 //Si se seleccionó peli, la guarda en el localstorage y carga el select de Formato
 function onChangePelicula() {
-    const selectedOption = selectPelicula.options[selectPelicula.selectedIndex].value
+    const selectedOption = selectPelicula.options[selectPelicula.selectedIndex].value;
+    let imgPelicula="";
+    let imgEncontrada = arrPelicula.filter((e) => {
+        return e.title===selectedOption;    
+    });
+    imgEncontrada.forEach((e) => {
+        imgPelicula=e.image;
+    });
+
     if (validarCine) {
         localStorage.setItem("pelicula", selectedOption)
+        localStorage.setItem("imagePelicula", imgPelicula)
     } else {
         localStorage.setItem("pelicula", selectedOption)
+        localStorage.setItem("imagePelicula", imgPelicula)
         formPelicula.classList.remove("disableElement")
         selectCine.classList.remove("disableElement")
         validarPelicula = true
@@ -501,14 +480,21 @@ function pagarEntrada() {
     formPagar.classList.remove("disableElement")
     let htmlPagar = document.createElement('div')
     htmlPagar.innerHTML = `
-        <h2>RESUMEN DE LA COMPRA</H2>
-        <h3>Usted ha seleccionado la película: ${localStorage.getItem('pelicula')}</h3> 
-        <h4>Formato ${localStorage.getItem('formatoEntrada')}, en el cine ${localStorage.getItem('cineEntrada')}.<br> 
-        Día: ${localStorage.getItem('diaEntrada')} a las ${localStorage.getItem('horaEntrada')} hrs. Asiento: ${localStorage.getItem('asientoEntrada')}</h4>
-        <h4>Promoción: ${localStorage.getItem('precioEntrada')}. Cantidad de entradas: ${localStorage.getItem('cantidadEntrada')}</h4>
-        <br>
-        <h3>Total a pagar: $${localStorage.getItem('totalEntrada')}, para pagar con la tarjeta ${localStorage.getItem('tarjetaEntrada')}.</h3>
-        <p><a class="btn btn-dark" id="pagar">PAGAR</a> <a class="btn btn-dark" href="../pages/entradas.html">CANCELAR COMPRA</a></p>
+        <div class="card">
+            <div class="card-body">
+                <h2>RESUMEN DE LA COMPRA</H2>    
+                <img src="../asset/img/${localStorage.getItem("imagePelicula")}">
+                <h3>Usted ha seleccionado la película: ${localStorage.getItem('pelicula')}</h3> 
+                <h4>Formato ${localStorage.getItem('formatoEntrada')}, en el cine ${localStorage.getItem('cineEntrada')}.<br> 
+                Día: ${localStorage.getItem('diaEntrada')} a las ${localStorage.getItem('horaEntrada')} hrs. Asiento: ${localStorage.getItem('asientoEntrada')}</h4>
+                <h4>Promoción: ${localStorage.getItem('precioEntrada')}. Cantidad de entradas: ${localStorage.getItem('cantidadEntrada')}</h4>
+                <br>
+                <h3>Total a pagar: $${localStorage.getItem('totalEntrada')}, para pagar con la tarjeta ${localStorage.getItem('tarjetaEntrada')}.</h3>
+            </div>
+            <div class="card-footer">
+            <p><a class="btn btn-dark" id="pagar">PAGAR</a> <a class="btn btn-dark" href="../pages/entradas.html">CANCELAR COMPRA</a></p>
+            </div>
+        </div>            
     `
     formPagar.appendChild(htmlPagar)
     validar=true
