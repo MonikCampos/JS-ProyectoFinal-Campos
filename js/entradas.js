@@ -40,6 +40,7 @@ let validarResumen = false
 const jsonPeliculas = localStorage.getItem("jsonPeliculas");
 const arrPelicula = JSON.parse(jsonPeliculas);
 
+const urlVentas = "https://648d08998620b8bae7ed860a.mockapi.io/Ventas";
 
 function mostrarPelicula () {
     Swal.fire({
@@ -548,7 +549,7 @@ function confirmarPago() {
             Swal.fire('¡Compra realizada con éxito!', '', 'success')
             setTimeout(function() {
                 window.location.href = "../index.html";
-            }, 4000);
+            }, 3000);
         } else if (result.isDenied) {
             Swal.fire('La compra fue cancelada', '', 'info')
         }
@@ -556,28 +557,31 @@ function confirmarPago() {
 }
 
 function envioFormulario() {
-    const id =  Math. random();
-    const nombre = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido");
-    const usuario = localStorage.getItem("email");
-    const pelicula = localStorage.getItem("pelicula");
-    const cine = localStorage.getItem("cineEntrada");
-    const formato = localStorage.getItem("formatoEntrada");
-    const fecha = localStorage.getItem("diaEntrada");
-    const hora = localStorage.getItem("horaEntrada");
-    const asiento = localStorage.getItem("asientoEntrada");
-    const precio = localStorage.getItem("precioEntrada");
-    const cantidad = localStorage.getItem("cantidadEntrada");
-    const tarjeta = localStorage.getItem("tarjetaEntrada");
-    const total = localStorage.getItem("totalEntrada");
-
-
-    const ventaEntrada = { id, nombre, usuario, pelicula, cine, formato, fecha, hora, asiento, precio, cantidad, tarjeta, total}
+    const nombre = localStorage.getItem("nombre") + " " + localStorage.getItem("apellido")
+    const usuario = localStorage.getItem("email")
+    const pelicula = localStorage.getItem("pelicula")
+    const cine = localStorage.getItem("cineEntrada")
+    const formato = localStorage.getItem("formatoEntrada")
+    const fecha = localStorage.getItem("diaEntrada")
+    const hora = localStorage.getItem("horaEntrada")
+    const asiento = localStorage.getItem("asientoEntrada")
+    const precio = localStorage.getItem("precioEntrada")
+    const cantidad = localStorage.getItem("cantidadEntrada")
+    const tarjeta = localStorage.getItem("tarjetaEntrada")
+    const total = localStorage.getItem("totalEntrada")
+    const ventaEntrada = {nombre, usuario, pelicula, cine, formato, fecha, hora, asiento, precio, cantidad, tarjeta, total}
     
-    //Json
-    let jsonVenta = JSON.stringify(ventaEntrada);
-    //Guardar en storage
-    let venta = "venta" + id
-    localStorage.setItem(venta, jsonVenta)
-    // alert("Se guardó: " + jsonVenta)
+    guardarVentaAsync(ventaEntrada)
 }
 
+async function guardarVentaAsync(vta) {
+    //Tranforma en Json y guarda los datos de la vta en MockAPI
+    const resp = await fetch(urlVentas, {
+    method: "POST",
+    body: JSON.stringify(vta),
+    headers: {
+        "Content-Type": "application/json",
+    },
+    })
+    const data = await resp.json()
+}
