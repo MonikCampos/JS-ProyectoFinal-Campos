@@ -70,13 +70,12 @@ function validarLogin() {
 }
 
 function enviarLogin() {
-  errorLabel.innerText = "paso";
   window.location.href = "../pages/entradas.html";
 }
 
 btnLogin.addEventListener("click", () => {
   validarLogin();
-  enviarLogin();
+  vLogin === true && enviarLogin();
 });
 
 function limpiarLogin () {

@@ -1,4 +1,4 @@
- //Lógica para la vta de entradas
+//Lógica para la vta de entradas
 const formEntradas = document.getElementById('formEntradas')
 const formPelicula = document.getElementById('formPelicula')
 const formPrecio = document.getElementById('formPrecio')
@@ -43,14 +43,16 @@ const arrPelicula = JSON.parse(jsonPeliculas);
 const urlVentas = "https://648d08998620b8bae7ed860a.mockapi.io/Ventas";
 
 function mostrarPelicula () {
-    Swal.fire({
-        title: localStorage.getItem("pelicula"),
-        text: 'Película seleccionada para comprar entradas',
-        imageUrl: '../asset/img/' + localStorage.getItem("imagePelicula"),
-        imageWidth: 180,
-        imageHeight: 250,
-        imageAlt: localStorage.getItem("pelicula")
-    })
+    if (localStorage.getItem("imagePelicula") && localStorage.getItem("pelicula")) {
+        Swal.fire({
+            title: localStorage.getItem("pelicula"),
+            text: 'Película seleccionada para comprar entradas',
+            imageUrl: '../asset/img/' + localStorage.getItem("imagePelicula"),
+            imageWidth: 180,
+            imageHeight: 250,
+            imageAlt: localStorage.getItem("pelicula")
+        })
+    }
 }
 mostrarPelicula();
 validarUsr()
@@ -113,10 +115,12 @@ function validarMovie() {
         validarPelicula=true;
         return true;
     } else {
-    //No hay pelicual seleccionada, select que permite cambiar la elegir de película
+    // alert ("Peli: " + localStorage.getItem('pelicula'))
+    //No hay pelicula seleccionada, select que permite cambiar la elegir de película
     sectionMovie.innerHTML = cargaPeliculasSelect();
     selectPelicula = document.getElementById('selectPelicula')
     selectPelicula.addEventListener("change", onChangePelicula)
+    selectCine.classList.add("disableElement");
     validarPelicula=false
     return false
     }
@@ -132,7 +136,6 @@ function onChangePelicula() {
     imgEncontrada.forEach((e) => {
         imgPelicula=e.image;
     });
-
     if (validarCine) {
         localStorage.setItem("pelicula", selectedOption)
         localStorage.setItem("imagePelicula", imgPelicula)
@@ -143,6 +146,7 @@ function onChangePelicula() {
         selectCine.classList.remove("disableElement")
         validarPelicula = true
     }
+    mostrarPelicula();
 }
 
 //Si se seleccionó cine, lo guarda en el localstorage y carga el select de Formato
@@ -382,34 +386,73 @@ function sectionAsiento() {
     formAsiento.classList.remove("disableElement")
     
     let htmlAsiento = document.createElement('div')
-    htmlAsiento.innerHTML = `
-        <h4>Usted ha seleccionado la película: ${localStorage.getItem('pelicula')}. <br>Formato ${localStorage.getItem('formatoEntrada')}, 
-        en el cine ${localStorage.getItem('cineEntrada')}. <br>Día: ${localStorage.getItem('diaEntrada')} 
-        a las ${localStorage.getItem('horaEntrada')} hrs.</h4>
-        <br>
-        <h4>Promoción: ${localStorage.getItem('precioEntrada')}. Cantidad de entradas: ${localStorage.getItem('cantidadEntrada')}</h4>
-        <br>
-        <h4><b>A pagar: $${localStorage.getItem('totalEntrada')}</b></h4>
-        <h3>Selección de asiento</h3>
-        <p>
-            <select name="selectAsiento" id="selectAsiento">
-                <option selected vaLue="">Seleccione asiento...</option>
-                <option value="F1-A1">F1-A1</option>
-                <option value="F1-A2">F1-A2</option>
-                <option value="F2-A6">F2-A6</option>
-                <option value="F7-A1">F7-A1</option>
-                <option value="F7-A1">F7-A2</option>
-                <option value="F7-A1">F7-A3</option>
-            </select>
-        </p>
-        `
+    asientosEntradas=`
+    <h4>Usted ha seleccionado la película: ${localStorage.getItem('pelicula')}. <br>Formato ${localStorage.getItem('formatoEntrada')}, 
+    en el cine ${localStorage.getItem('cineEntrada')}. <br>Día: ${localStorage.getItem('diaEntrada')} 
+    a las ${localStorage.getItem('horaEntrada')} hrs.</h4>
+    <br>
+    <h4>Promoción: ${localStorage.getItem('precioEntrada')}. Cantidad de entradas: ${localStorage.getItem('cantidadEntrada')}</h4>
+    <br>
+    <h4><b>A pagar: $${localStorage.getItem('totalEntrada')}</b></h4>
+    <h3>Selección de asientos</h3>`
+    htmlAsiento.innerHTML = asientosEntradas + crearSelectAsientos ()
     formAsiento.appendChild(htmlAsiento)
     selectAsiento = document.getElementById('selectAsiento')
     selectAsiento.addEventListener("change", onChangeAsiento)
 }
 
+function crearSelectAsientos () {
+    let htmlAsientos = ""
+    for (let i=1;i<=localStorage.getItem("cantidadEntrada");i++) {
+        if (i==localStorage.getItem("cantidadEntrada")) {
+            htmlAsientos += 
+            `<p>
+            <select name="selectAsiento" id="selectAsiento">
+                <option selected vaLue="">Seleccione asiento...</option>
+                <option value="F5-A1">F5-A1</option>
+                <option value="F5-A2">F5-A2</option>
+                <option value="F5-A3">F5-A3</option>
+                <option value="F5-A4">F4-A4</option>
+                <option value="F6-A2">F6-A2</option>
+                <option value="F6-A3">F6-A3</option>
+                <option value="F6-A4">F6-A4</option>
+                <option value="F6-A5">F6-A5</option>
+            </select>
+            </p>`
+        } else {
+            htmlAsientos += 
+            `<p>
+            <select name="selectAsiento${i}" id="selectAsiento${i}">
+                <option selected vaLue="">Seleccione asiento...</option>
+                <option value="F5-A1">F5-A1</option>
+                <option value="F5-A2">F5-A2</option>
+                <option value="F5-A3">F5-A3</option>
+                <option value="F5-A4">F4-A4</option>
+                <option value="F6-A2">F6-A2</option>
+                <option value="F6-A3">F6-A3</option>
+                <option value="F6-A4">F6-A4</option>
+                <option value="F6-A5">F6-A5</option>
+            </select>
+            </p>`
+        }
+    }
+    return htmlAsientos
+}
+
 function onChangeAsiento() {
-    const selectedOption = selectAsiento.options[selectAsiento.selectedIndex].value
+    let listadoAsientos = ""
+    let selectAsientoN = null
+    for (let i=1;i<=localStorage.getItem("cantidadEntrada");i++) {
+        if (i==localStorage.getItem("cantidadEntrada")) {
+            listadoAsientos += selectAsiento.options[selectAsiento.selectedIndex].value 
+            
+        } else {
+            let newA = `selectAsiento${i}`
+            selectAsientoN = document.getElementById(newA)
+            listadoAsientos += selectAsientoN.options[selectAsientoN.selectedIndex].value + " - "
+        }
+    }
+    const selectedOption = listadoAsientos
     if (validarAsiento) {
         localStorage.setItem("asientoEntrada", selectedOption)
     } else {
@@ -493,7 +536,7 @@ function pagarEntrada() {
                 <h3>Total a pagar: $${localStorage.getItem('totalEntrada')}, para pagar con la tarjeta ${localStorage.getItem('tarjetaEntrada')}.</h3>
             </div>
             <div class="card-footer">
-            <p><a class="btn btn-dark" id="pagar">PAGAR</a> <a class="btn btn-dark" href="../pages/entradas.html">CANCELAR COMPRA</a></p>
+            <p><a class="btn btn-dark" id="pagar">PAGAR</a></p>
             </div>
         </div>            
     `
@@ -546,12 +589,15 @@ function confirmarPago() {
         if (result.isConfirmed) {
             envioFormulario()
             limpiarEntrada()
-            Swal.fire('¡Compra realizada con éxito!', '', 'success')
+            Swal.fire('¡Compra realizada con éxito!, se enviarán las entradas a su email', '', 'success')
             setTimeout(function() {
                 window.location.href = "../index.html";
-            }, 3000);
+            }, 4000);
         } else if (result.isDenied) {
             Swal.fire('La compra fue cancelada', '', 'info')
+            setTimeout(function() {
+                window.location.href = "../index.html";
+            }, 2000);
         }
     })
 }
