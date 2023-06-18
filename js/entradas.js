@@ -49,7 +49,7 @@ function mostrarPelicula () {
             text: 'Película seleccionada para comprar entradas',
             imageUrl: '../asset/img/' + localStorage.getItem("imagePelicula"),
             imageWidth: 180,
-            imageHeight: 250,
+            imageHeight: 280,
             imageAlt: localStorage.getItem("pelicula")
         })
     }
