@@ -26,18 +26,8 @@ const btnCancel = document.getElementById("btnCancel");
 let btnComprarEntrada = null;
 
 class Movie {
-  constructor(
-    id,
-    titulo,
-    genero,
-    minutos,
-    origen,
-    director,
-    calificacion,
-    imagen,
-    descripcion,
-    video
-  ) {
+  constructor(id, titulo, genero, minutos, origen, director, calificacion, imagen, descripcion, video) 
+  {
     this.id = id;
     this.title = titulo;
     this.gender = genero;
@@ -105,7 +95,7 @@ const movie5 = new Movie(
   "Drama",
   79,
   "Argentina",
-  " Matías Szulanski",
+  "Matías Szulanski",
   "SAM13",
   "ultimorecurso.jpg",
   "La llegada de un paquete a la redacción de una revista deportiva venida a menos dispara una investigación que indicaría que el primer Campeonato Mundial de Fútbol se jugó en 1926, lo ganó Argentina y por algún motivo se borró de la historia oficial. Laura y Julia se lanzan al enigma para descifrar qué sucedió realmente y con un poco de ridículo y diversión animar sus monótonas vidas.",
@@ -117,7 +107,7 @@ const movie6 = new Movie(
   "Drama",
   90,
   "Argentina",
-  " Andrew Sala",
+  "Andrew Sala",
   "SAM13",
   "labarbarie.jpg",
   "Nacho (18) huye de la violencia de su casa en Buenos Aires y busca un hogar al amparo de su padre, un estanciero a quien apenas conoce. La estancia viene sufriendo una amenaza: cada cierto tiempo una vaca aparece muerta, sin explicación. Para tratar de obtener la aprobación de su padre, Nacho buscará esclarecer estas muertes. Pero a medida que indague, irá descubriendo una gruesa capa de desconfianza y tensión de clase, que le harán preguntarse qué significa ser patrón.",
@@ -293,26 +283,8 @@ const movie20 = new Movie(
 );
 
 const movies = [
-  movie1,
-  movie2,
-  movie3,
-  movie4,
-  movie5,
-  movie6,
-  movie7,
-  movie8,
-  movie9,
-  movie10,
-  movie11,
-  movie12,
-  movie13,
-  movie14,
-  movie15,
-  movie16,
-  movie17,
-  movie18,
-  movie19,
-  movie20,
+  movie1, movie2, movie3, movie4, movie5, movie6, movie7, movie8, movie9, movie10,
+  movie11, movie12, movie13, movie14, movie15, movie16, movie17, movie18, movie19, movie20,
 ];
 const foundMovies = [];
 
@@ -325,11 +297,7 @@ const jsonPeliculas = JSON.stringify(movies);
 localStorage.getItem("jsonPeliculas")!=true && localStorage.setItem("jsonPeliculas", jsonPeliculas)  
 
 function validarUsr() {
-  if (
-    (localStorage.getItem("nombre") != null &&
-      localStorage.getItem("apellido") != null &&
-      localStorage.getItem("contraseña") != null) ||
-    localStorage.getItem("email") != null) {
+  if ((localStorage.getItem("nombre") != null && localStorage.getItem("apellido") != null && localStorage.getItem("contraseña") != null) || localStorage.getItem("email") != null) {
     //Asigna el nombre del usuario logueado a la página
     faUsr.innerHTML = localStorage.getItem("nombre");
   }
@@ -351,12 +319,10 @@ function renderMovies(movies) {
       <div class="media p-3">
         <img src="./asset/img/${movie.image}" alt="${movie.title}" class="mr-3 mt-3">
           <div class="media-body">
-          <h4>${movie.gender} - ${movie.qualification}</h4>
-          <h2><strong>${movie.title}</strong></h2>
-          <p>${cortarDescripcion(movie.description, 60)}</p>
-          <a class="btn btn-dark btnSynopsis" id=${
-            movie.id
-          } href="#sinopsisBanner">Sinopsis</a>
+            <h4>${movie.gender} - ${movie.qualification}</h4>
+            <h2><strong>${movie.title}</strong></h2>
+            <p>${cortarDescripcion(movie.description, 60)}</p>
+            <a class="btn btn-dark btnSynopsis" id=${movie.id} href="#sinopsisBanner">Sinopsis</a>
           </div>
       </div>
       `;
@@ -378,7 +344,7 @@ function renderMovies(movies) {
       contenedorMovie.classList.add("col-md-6");
       contenedorMovie.classList.add("col-lg-3");
       contenedorMovie.innerHTML = `
-        <div class="card">
+      <div class="card">
         <img class="img-fluid" src="./asset/img/${movie.image}" alt="${movie.title}">
         <div class="card-body">
           <h4>${movie.gender} - ${movie.qualification}</h4>
@@ -387,7 +353,8 @@ function renderMovies(movies) {
         <div class="card-footer">
           <a class="btn btn-dark btnSynopsis" id=${movie.id} href="#sinopsisBanner">SINOPSIS</a>
         </div>
-    `;
+      </div>
+      `;
       moviesList.appendChild(contenedorMovie);
       let btnSynopsis = document.querySelectorAll(".btnSynopsis");
       redirectToMovie(btnSynopsis);
@@ -608,7 +575,7 @@ function showMovie(id) {
           <h3><strong>${foundMovie.gender}</strong></h3>  
           <h2>${foundMovie.title}</h2>
         </div>
-          <img src="./asset/img/${foundMovie.image}">
+        <img src="./asset/img/${foundMovie.image}">
         <div class="card-body">
           <p><strong>Minutos: </strong>${foundMovie.minutes} minutos.<br>
           <strong>Calificación: </strong>${foundMovie.qualification}<br> 
@@ -628,54 +595,7 @@ function showMovie(id) {
     localStorage.setItem("pelicula", foundMovie.title);
     localStorage.setItem("imagePelicula", foundMovie.image);
   }
-  // btnComprarEntrada = document.getElementById('btnComprarEntrada');
 }
-
-// btnComprarEntrada.addEventListener("click", () => {
-//   //muestra la pelicula que se quiere comprar
-//   const swalWithBootstrapButtons = Swal.mixin({
-//     customClass: {
-//       confirmButton: "btn btn-dark",
-//       cancelButton: "btn btn-ligth",
-//     },
-//     buttonsStyling: false,
-//   });
-
-//   swalWithBootstrapButtons
-//     .fire({
-//       title: "Sweet!",
-//       text:
-//         "Película seleccionada para comprar: " +
-//         localStorage.getItem("pelicula"),
-//       imageUrl: localStorage.getItem("imagePelicula"),
-//       imageWidth: 200,
-//       imageHeight: 500,
-//       imageAlt: localStorage.getItem("pelicula"),
-//       confirmButtonColor: "#7E8ECB",
-//       showCancelButton: true,
-//       confirmButtonText: "Sí, quiero comprar una entrada!",
-//       cancelButtonText: "No, no quiero comprar!",
-//       reverseButtons: true,
-//     })
-//     .then((result) => {
-//       if (result.isConfirmed) {
-//         swalWithBootstrapButtons.fire(
-//           "Deleted!",
-//           "Your file has been deleted.",
-//           "success"
-//         );
-//       } else if (
-//         /* Read more about handling dismissals below */
-//         result.dismiss === Swal.DismissReason.cancel
-//       ) {
-//         swalWithBootstrapButtons.fire(
-//           "Cancelled",
-//           "Your imaginary file is safe :)",
-//           "error"
-//         );
-//       }
-//     });
-// });
 
 //popover de login
 $(document).ready(function () {

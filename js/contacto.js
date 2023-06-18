@@ -53,7 +53,7 @@ function enviarFormulario() {
         title: 'El mensaje fue enviado con éxito',
         showConfirmButton: false,
         timer: 1500
-      })
+    })
     formContacto.reset()
     errorLabel.innerText=""
 }

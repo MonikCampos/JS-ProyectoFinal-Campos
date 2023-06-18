@@ -2,7 +2,6 @@ const formLogin = document.getElementById("formLogin");
 const btnLogin = document.getElementById("btnLogin");
 const errorDiv = document.getElementById("errorDiv");
 const errorLabel = document.getElementById("errorLabel");
-
 const nombreLogin = document.getElementById("nombreLogin");
 const contraseñaLogin = document.getElementById("contraseñaLogin");
 

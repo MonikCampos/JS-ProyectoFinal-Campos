@@ -507,9 +507,9 @@ function onChangeTarjeta() {
         localStorage.setItem("tarjetaEntrada", selectedOption)
         let htmlSiguiente = document.createElement('div')
         htmlSiguiente.innerHTML = `
-            <p>
-                <a class="btn btn-dark" id="siguienteResumen">SIGUIENTE</a> <a class="btn btn-dark" href="../pages/entradas.html">CANCELAR COMPRA</a>
-            </p>
+        <p>
+            <a class="btn btn-dark" id="siguienteResumen">SIGUIENTE</a> <a class="btn btn-dark" href="../pages/entradas.html">CANCELAR COMPRA</a>
+        </p>
         `
         formResumen.appendChild(htmlSiguiente)
         validarTarjeta = true

@@ -3,7 +3,6 @@ const btnSubmit = document.getElementById("btnSubmit");
 const btnReset = document.getElementById("btnReset");
 const errorDiv = document.getElementById("errorDiv");
 const errorLabel = document.getElementById("errorLabel");
-
 const nombre = document.getElementById("nombre");
 const apellido = document.getElementById("apellido");
 const dni = document.getElementById("dni");
