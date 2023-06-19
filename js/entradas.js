@@ -60,9 +60,7 @@ validarMovie()
 
 formEntradas.addEventListener('submit', function (event) {
     event.preventDefault()
-    if (validar) {
-        envioFormulario()
-    }
+    validar === true && envioFormulario()
 });
 
 //Busca si hay usuario logueado para asignarle la compra y saludarlo
@@ -234,8 +232,10 @@ function onChangeDia() {
             htmlHora.innerHTML = `
                 <select name="selectHora" id="selectHora">
                     <option selected="selected" value="">Seleccione Hora...</option>
+                    <option value="11:00">11:00</option>
                     <option value="14:30">14:30</option>
                     <option value="16:50">16:50</option>
+                    <option value="17:20">17:20</option>
                     <option value="18:10">18:10</option>
                     <option value="22:20">22:20</option>
                 </select>
@@ -409,10 +409,14 @@ function crearSelectAsientos () {
             `<p>
             <select name="selectAsiento" id="selectAsiento">
                 <option selected vaLue="">Seleccione asiento...</option>
-                <option value="F5-A1">F5-A1</option>
-                <option value="F5-A2">F5-A2</option>
-                <option value="F5-A3">F5-A3</option>
-                <option value="F5-A4">F4-A4</option>
+                <option value="F1-A1">F1-A1</option>
+                <option value="F1-A2">F1-A2</option>
+                <option value="F1-A3">F1-A3</option>
+                <option value="F1-A4">F1-A4</option>
+                <option value="F3-A1">F3-A1</option>
+                <option value="F3-A2">F3-A2</option>
+                <option value="F3-A3">F3-A3</option>
+                <option value="F3-A4">F3-A4</option>
                 <option value="F6-A2">F6-A2</option>
                 <option value="F6-A3">F6-A3</option>
                 <option value="F6-A4">F6-A4</option>
@@ -424,10 +428,14 @@ function crearSelectAsientos () {
             `<p>
             <select name="selectAsiento${i}" id="selectAsiento${i}">
                 <option selected vaLue="">Seleccione asiento...</option>
-                <option value="F5-A1">F5-A1</option>
-                <option value="F5-A2">F5-A2</option>
-                <option value="F5-A3">F5-A3</option>
-                <option value="F5-A4">F4-A4</option>
+                <option value="F1-A1">F1-A1</option>
+                <option value="F1-A2">F1-A2</option>
+                <option value="F1-A3">F1-A3</option>
+                <option value="F1-A4">F1-A4</option>
+                <option value="F3-A1">F3-A1</option>
+                <option value="F3-A2">F3-A2</option>
+                <option value="F3-A3">F3-A3</option>
+                <option value="F3-A4">F3-A4</option>
                 <option value="F6-A2">F6-A2</option>
                 <option value="F6-A3">F6-A3</option>
                 <option value="F6-A4">F6-A4</option>

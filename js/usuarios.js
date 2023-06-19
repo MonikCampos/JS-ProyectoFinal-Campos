@@ -23,8 +23,8 @@ function validarUsrFormulario() {
     if (nombre.value == "" || apellido.value == "" || dni.value == "" || email.value == "" || contraseña1.value == "" || contraseña2.value == "") {
         errorLabel.innerText="Para poder guardar el usuario debe completar todos sus datos!";
         errorDiv.classList.remove("disableElement");
-        validarUsr = false;
-        return false;
+            validarUsr = false;
+            return false;
     } else {
         if (contraseña1.value != contraseña2.value) {
             errorLabel.innerText="Las contraseñas no coinciden!, ingreselas nuevamente";
@@ -34,9 +34,17 @@ function validarUsrFormulario() {
             contraseña1.focus();
             validarUsr = false;
             return false;
-        } else {
-        validarUsr = true;
-        return true;
+        } else {            
+                if (typeof(dni.value)===Number) {
+                    errorLabel.innerText="El dni debe ser numérico!, ingréselo nuevamente";
+                    errorDiv.classList.remove("disableElement");
+                    dni.focus();
+                    validarUsr = false;
+                    return false;
+                } else {
+                    validarUsr = true;
+                    return true;
+                }
         }
     }
 }
@@ -97,5 +105,5 @@ btnReset.addEventListener("click", () => {
 });
 
 btnSubmit.addEventListener("click", () => {
-    validarUsrFormulario() === true ? enviarUsrFormulario() : Swal.fire('Error al agregar nuevo usuario, intente nuevamente');
+    validarUsrFormulario() === true ? enviarUsrFormulario() : Swal.fire('Verifique que los datos ingresados!');
 });

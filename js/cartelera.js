@@ -585,7 +585,7 @@ function showMovie(id) {
         </div>
         <div class="card-footer">
           <a class="btn btn-dark" href="./pages/entradas.html">COMPRAR ENTRADAS</a>
-          <a class="btn btn-dark" href="./index.html">VOLVER A CARTELERA</a>
+          <a class="btn btn-dark" href="#goTop">VOLVER A CARTELERA</a>
           
         </div>
         <iframe src="${foundMovie.video}" title="${foundMovie.title}" frameborder="0" allow="autoplay" allowfullscreen></iframe>

@@ -153,6 +153,14 @@ i {
     letter-spacing: 30px;
 }
 
+#faUsr {
+    font-size: 8px;
+    color: var(--gris);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 0 1px 0;
+}
+
 i:hover {
     color: var(--negro);
     transform: scale(1.05);

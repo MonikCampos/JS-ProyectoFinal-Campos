@@ -24,7 +24,7 @@
     <main>
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
             <a class="navbar-brand" href="../pages/login.html" data-toggle="popover" data-trigger="focus" title="Login"
-                data-content="Ingresa con tu usuario para adquirir la entrada"><i class="fa-solid fa-user"></i></a>
+        data-content="Ingresa con tu usuario para adquirir la entrada"><i class="fa-solid fa-user"><div id="faUsr""></div></i></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -49,12 +49,12 @@
                         </div>
                         <div class="card-body">
                             <form id="formUsuarios">
-                                <input name="nombre" size="40" type="text" id="nombre" PlaceHolder="Ingrese su nombre..." /><br>
-                                <input name="apellido" size="40" type="text" id="apellido" PlaceHolder="Ingrese su apellido..." /><br>
-                                <input name="dni" size="40" type="text" id="dni" PlaceHolder="Ingrese su DNI..." /><br>
-                                <input name="email" size="40" type="text" id="email" PlaceHolder="Ingrese su email..." /><br>
-                                <input name="contraseña1" size="40" type="password" id="contraseña1" PlaceHolder="Ingrese una contraseña..." /><br>
-                                <input name="contraseña2" size="40" type="password" id="contraseña2" PlaceHolder="Reingrese la contraseña..." />
+                                <input name="nombre" size="40" type="text" id="nombre" required PlaceHolder="Ingrese su nombre..." /><br>
+                                <input name="apellido" size="40" type="text" id="apellido" required PlaceHolder="Ingrese su apellido..." /><br>
+                                <input name="dni" type="text" size="40" type="text" maxlength=8 id="dni" required PlaceHolder="Ingrese su DNI..." /><br>
+                                <input name="email" size="40" type="email" id="email" required PlaceHolder="Ingrese su email..." /><br>
+                                <input name="contraseña1" size="40" type="password" id="contraseña1" required PlaceHolder="Ingrese una contraseña..." /><br>
+                                <input name="contraseña2" size="40" type="password" id="contraseña2" required PlaceHolder="Reingrese la contraseña..." />
                             </form>
                             <br>
                             <div id="errorDiv" class="disableElement">
